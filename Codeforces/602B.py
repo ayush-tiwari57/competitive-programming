@@ -16,4 +16,5 @@ for i in range(1,n):
         x=y+1
         y=1
     ans=max(ans,max(x,y))
+    
 print(ans)
