@@ -1,0 +1,7 @@
+s=input()
+ob=s.find('[')
+cb=s.rfind(']')
+fc=s[ob:cb].find(':')
+sc=s[ob:cb].rfind(':')
+if ob>cb or fc==sc: print(-1)
+else: print(4+s[ob+fc:ob+sc].count('|'))
