@@ -7,7 +7,7 @@ for i in range(n):
     a.append([x,y])
     y=int(y)
     d[x]=d.get(x,0)+y
-m=max(d.values())
+m=max(d.values())  
 f={}
 for i in range(n):
    x=a[i][0]
