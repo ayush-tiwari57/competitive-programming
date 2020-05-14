@@ -11,4 +11,7 @@ for i in range(n):
     if l[i]>1:
         d[l[i]]=d.get(l[i],0)+1
 # print(d)
+if d=={}:
+    print(1)
+    exit(0)
 print(max(1,max(d.values())))
