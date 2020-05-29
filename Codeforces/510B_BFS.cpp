@@ -24,7 +24,27 @@
 
 
 using namespace std;
+queue<int> q;
 
+int bfs(vector<int> adj[],int visited[],int parent[],int size,int start){
+    int x;
+    visited[start]=1;
+    q.push(start);
+    while(!q.empty()){
+        x=q.front();
+        // cout<<x<<"->";
+        q.pop();
+        for(auto i: adj[x]){
+            if(!visited[i]){
+                visited[i]=1;
+                q.push(i);
+                parent[i]=x;
+            }
+            else if(parent[x]!=i) return 1;
+        }
+    }
+    return 0;
+}
 
 void solution(){
 
@@ -46,8 +66,8 @@ void solution(){
             if(i!=n-1 && a[i][j]==a[i+1][j]){
                 e1=m*(i)+j;
                 e2=m*(i+1)+j;
-                adj[e2].pb(e1);
                 adj[e1].pb(e2);
+                adj[e2].pb(e1);
             }
             if(j!=m-1 && a[i][j]==a[i][j+1]){
                 e1=m*i+j;
@@ -57,8 +77,20 @@ void solution(){
             }
         }
     }
-    
-
+    // forn(i,0,size){
+    // for(auto x: adj[i]) cout<<x<<"->";
+    // cout<<endl;
+    // }
+    int visited[size]={0};
+    int parent[size];
+    memset(parent,-1,sizeof(parent));
+    int flag;
+    forn(i,0,size){
+    if(visited[i]==0) flag=bfs(adj,visited,parent,size,i);
+    if(flag==1) break;
+    }
+    if(flag==1) cout<<"Yes";
+    else cout<<"No";
 }
 
 
