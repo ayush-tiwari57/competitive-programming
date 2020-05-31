@@ -31,6 +31,10 @@ void solution(){
     // This is the main code
     int n,m,a,b,ma=0,mb=2e9,temp;
     cin>>n>>m;
+    if(m==0) {
+        cout<<n-1;
+        return;
+    }
     while(m--){
         cin>>a>>b;
         if(a>b){
@@ -41,6 +45,7 @@ void solution(){
         ma=max(ma,a);
         mb=min(mb,b);
     }
+
     cout<<max(0,mb-ma);
 
 }
