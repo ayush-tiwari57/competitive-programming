@@ -8,7 +8,6 @@ import sys
 input = sys.stdin.buffer.readline
     
 def solution():
-    a=[1,2,1,3,1,2,1]
     for _ in range(int(input())):
         
         # This is the main code
