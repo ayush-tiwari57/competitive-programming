@@ -16,7 +16,7 @@
 #define rforn(i,a,b) for(int i=a; i>=b; i--)
 
 // defined values
-#define maxn 1004
+#define maxn 1000004
 #define Mod 1000000007
 
 // fast io
@@ -25,43 +25,26 @@
 
 using namespace std;
 
-char  c[maxn][maxn]={};
-int vis[maxn][maxn]={};
-int ans[100004]={};
-int n,m,k,i,x,y,cnt;
-
-void dfs(int x,int y){
-    if(x<1 || x>n || y<1 || y>m) return;
-    if(c[x][y]=='*'){
-        cnt++;
-        return;
-    }
-    if(vis[x][y]!=0) return;
-    vis[x][y]=i;
-    dfs(x-1,y);
-    dfs(x+1,y);
-    dfs(x,y-1);
-    dfs(x,y+1);
-    return;
-}
 
 void solution(){
 
     // This is the main code
-    cin>>n>>m>>k;
-    for(i=1;i<=n;i++){
-        forn(j,1,m+1) cin>>c[i][j];
-    }
-    for(i=1;i<=k;i++){
-        cin>>x>>y;
-        cnt=0;
-        if(!vis[x][y]){
-            dfs(x,y);
-            ans[i]=cnt;
-        } 
-        else cnt=ans[vis[x][y]];
-        cout<<cnt<<endl;
-    }
+    	int n,d,h;
+        scanf("%d%d%d",&n,&d,&h);
+        if (d>2*h || n<=d || (h==1 && d==1 && n!=2))
+        {
+            printf("-1");
+            return;
+        }
+        for (int i=0;i<d;i++)
+        {
+            if (i==h)
+            printf("1 %d\n",i+2);
+            else
+            printf("%d %d\n",i+1,i+2);
+        }
+        for (int i=d+1;i<n;i++)
+        printf("%d %d\n",h,i+1);
 
 }
 
@@ -76,7 +59,7 @@ int main(){
     FIO()   
     
     ll t=1;
-   // cin>>t;
+    //cin>>t;
     while (t--)
     {
         solution();

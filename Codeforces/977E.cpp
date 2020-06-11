@@ -5,7 +5,7 @@
 
 #include <bits/stdc++.h>
 #define ll long long
-
+    
 //STL
 #define pb push_back
 #define lb lower_bound
@@ -16,7 +16,7 @@
 #define rforn(i,a,b) for(int i=a; i>=b; i--)
 
 // defined values
-#define maxn 1004
+#define maxn 1000004
 #define Mod 1000000007
 
 // fast io
@@ -25,43 +25,37 @@
 
 using namespace std;
 
-char  c[maxn][maxn]={};
-int vis[maxn][maxn]={};
-int ans[100004]={};
-int n,m,k,i,x,y,cnt;
+vector<int> graph[200003];
+int vis[200004]={0};
+int f;
 
-void dfs(int x,int y){
-    if(x<1 || x>n || y<1 || y>m) return;
-    if(c[x][y]=='*'){
-        cnt++;
-        return;
+void dfs(int i){
+    vis[i]=1;
+    if(graph[i].size()!=2) f=0;
+    for(auto x:graph[i]){
+        if(!vis[x]) dfs(x);
     }
-    if(vis[x][y]!=0) return;
-    vis[x][y]=i;
-    dfs(x-1,y);
-    dfs(x+1,y);
-    dfs(x,y-1);
-    dfs(x,y+1);
-    return;
 }
 
 void solution(){
 
     // This is the main code
-    cin>>n>>m>>k;
-    for(i=1;i<=n;i++){
-        forn(j,1,m+1) cin>>c[i][j];
+    int n,m,u,v;
+    cin>>n>>m;
+    forn(i,0,m){
+        cin>>u>>v;
+        graph[u].pb(v);
+        graph[v].pb(u);
     }
-    for(i=1;i<=k;i++){
-        cin>>x>>y;
-        cnt=0;
-        if(!vis[x][y]){
-            dfs(x,y);
-            ans[i]=cnt;
-        } 
-        else cnt=ans[vis[x][y]];
-        cout<<cnt<<endl;
+    int ans=0;
+    forn(i,1,n+1){
+        f=1;
+        if(!vis[i]){
+            dfs(i);
+            if(f) ans++;
+        }
     }
+    cout<<ans;
 
 }
 
@@ -76,7 +70,7 @@ int main(){
     FIO()   
     
     ll t=1;
-   // cin>>t;
+    //cin>>t;
     while (t--)
     {
         solution();
