@@ -31,24 +31,26 @@ using namespace std;
 void solution(){
 
     // This is the main code
-    string s,p;
-    cin>>s>>p;
-    int a=1,i=0,j=0;
-    vector<vector<int>> v(26);
-    for(auto c: s) v[c-'a'].pb(i++);
-    for(auto c:p){
-        auto &x=v[c-'a'];
-        auto it=lb(all(x),j);
-        // cout<<j<<" "<<*it<<" "<<*x.end()<<endl;
-        if(it==x.end()){
-            a++;
-            it =lb(all(x),0);
-            if(it==x.end()) {a=-1;break;}
-        }
-        j=*it+1;
+    int n;
+    cin>>n;
+    ll arr[n+1][n+1];
+    forn(i,0,n){
+        forn(j,0,n) cin>>arr[i][j];
     }
-    cout<<a<<endl;
-
+    vector<ll> x(n,0),ans(n,0);
+    forn(i,0,n){
+        cin>>x[i];
+        x[i]--;
+    }
+    rforn(k,n-1,0){
+        forn(i,0,n){
+            forn(j,0,n) arr[i][j]=min(arr[i][j],arr[i][x[k]]+arr[x[k]][j]);
+        }
+        forn(i,k,n){
+            forn(j,k,n) ans[k]+=arr[x[i]][x[j]];
+        }
+    }
+    for(auto x: ans) cout<<x<<" ";
 }
 
 
@@ -62,7 +64,7 @@ int main(){
     FIO()   
     
     ll t=1;
-    cin>>t;
+    //cin>>t;
     while (t--)
     {
         solution();

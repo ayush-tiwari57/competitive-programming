@@ -28,26 +28,39 @@
 using namespace std;
 
 
+vector<int> a[maxn];
 void solution(){
 
     // This is the main code
-    string s,p;
-    cin>>s>>p;
-    int a=1,i=0,j=0;
-    vector<vector<int>> v(26);
-    for(auto c: s) v[c-'a'].pb(i++);
-    for(auto c:p){
-        auto &x=v[c-'a'];
-        auto it=lb(all(x),j);
-        // cout<<j<<" "<<*it<<" "<<*x.end()<<endl;
-        if(it==x.end()){
-            a++;
-            it =lb(all(x),0);
-            if(it==x.end()) {a=-1;break;}
-        }
-        j=*it+1;
+    int n,k,dis;
+    cin>>n>>k;
+    forn(i,0,n){
+        cin>>dis;
+        a[dis].pb(i+1);
     }
-    cout<<a<<endl;
+    if (a[0].size()!=1){
+        cout<<"-1";
+        return;
+    }
+    if(a[1].size()>k){
+        cout<<"-1";
+        return;
+    }
+    forn(i,1,n){
+        if((ll) a[i].size()*(k-1)<a[i+1].size()){
+            cout<<"-1";
+            return;
+        }
+    }
+    int j,z;
+    cout<<n-1<<endl;
+    for(int i=0;i<n;i++){
+        for(j=z=0;z<a[i+1].size();z++){
+            cout<<a[i][j]<<" "<<a[i+1][z]<<endl;
+            j++;
+            if(j==a[i].size()) j=0;
+        }
+    }
 
 }
 
@@ -62,7 +75,7 @@ int main(){
     FIO()   
     
     ll t=1;
-    cin>>t;
+    //cin>>t;
     while (t--)
     {
         solution();
