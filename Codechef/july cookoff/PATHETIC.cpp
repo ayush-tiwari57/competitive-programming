@@ -28,21 +28,15 @@
 using namespace std;
 
 vector<int> graph[maxn];
-int depth[maxn];
-int dad[maxn];
-void dfs(int node,int parent,int dep){
-    depth[node]=dep;
-    dad[node]=parent;
-    for(auto x: graph[node]){
-        if(parent==x) continue;
-        dfs(x,node,dep+1);
-    }
-}
-void dfs1(int node,int parent,int dep){
-    if(!depth[node]) depth[node]=dep;
-    for(auto x: graph[node]){
-        if(parent==x) continue;
-        dfs(x,node,dep+1);
+ll ans[maxn],vis[maxn];
+
+ll x=1816798556036292277,y=1269027849171992910;
+
+void dfs(int node,int dep){
+    ans[node]=dep;
+    vis[node]=1;
+    for(auto z: graph[node]){
+        if(!vis[z]) dfs(z,dep+1);
     }
 }
 
@@ -50,42 +44,20 @@ void solution(){
 
     // This is the main code
     int n,u,v;
-    memset(depth,0,sizeof(depth));
+    memset(ans,0,sizeof(ans));
+    memset(vis,0,sizeof(vis));
     cin>>n;
     forn(i,0,n+1) graph[i].clear();
-    forn(i,0,n){
+    forn(i,0,n-1){
         cin>>u>>v;
         graph[v].pb(u);
         graph[u].pb(v);
     }
-    dfs(1,0,0);
-    int m=-1,ind;
+    dfs(1,0);
     forn(i,1,n+1){
-        if(depth[i]>m){
-            m=depth[i];
-            ind=i;
-        }
+        if(ans[i]%2) cout<<x<<" ";
+        else cout<<y<<" ";
     }
-    memset(depth,0,sizeof(depth));
-    dfs(ind,0,0);
-    m=-1;
-    int ind2;
-    forn(i,1,n+1){
-        if(depth[i]>m){
-            m=depth[i];
-            ind2=i;
-        }
-    }
-    memset(depth,0,sizeof(depth));
-    int i=ind2,dep=1;
-    while (dad[i]!=ind){
-        depth[i]=dep;
-        dep++;
-        i=dad[i];
-    }
-    depth[ind]=dep;
-    dfs1(1,0,1);
-    forn(i,1,n+1) cout<<depth[i]<<" ";
     cout<<endl;
 }
 

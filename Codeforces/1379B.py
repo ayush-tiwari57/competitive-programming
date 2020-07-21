@@ -8,15 +8,21 @@ import sys
 input = sys.stdin.buffer.readline
 
 def solution():
-    for _ in range(int(input())):
+    
         
-        # This is the main code
-        l,r,m=map(int,input().split())
-        if m>=l and m<=r:
-            print(m,l,l)
-        else:
-            lim=r-l
+    # This is the main code
+    l,r,m=map(int,input().split())
+    # l,r,m=map(int,input().split())
+    d=r-l
+    for i in range(l,r+1):
+        v=m%i
+        if v<=d and m>=i:
+            print(i,l+v,l)
+            break
+        elif v>=i-d:
+            print(i,l,l+i-v)
+            break
             
 
-
-solution()
+for _ in range(int(input())):
+    solution()
