@@ -27,46 +27,47 @@
 
 using namespace std;
 
+int n,a[maxn],u,v,ans[maxn],dp[maxn];
 vector<int> graph[maxn];
-ll vis[maxn]; 
-ll p[maxn],h[maxn],happy,happy_sum[maxn],total_vis[maxn];
-int n,m,u,v,flag;
-void dfs(int node,int parent){
-    vis[node]=1;
+
+void dfs1(int node,int parent){
+    dp[node]=a[node];
     for(auto child: graph[node]){
-        if(!vis[child]){
-            dfs(child,node);
-        }
+        if(child==parent) continue;
+        dfs1(child,node);
+        dp[node]+=max(dp[child],0);
     }
-    total_vis[node]+=p[node];
-    total_vis[parent]+=total_vis[node];
-    happy=(total_vis[node]+h[node])/2;
-    if((total_vis[node]+h[node])%2) flag=1;
-    happy_sum[parent]+=happy;
-    if(happy<happy_sum[node]) flag=1;
-    if(happy>total_vis[node] || happy<0) flag=1;
+}
+
+void dfs2(int node,int parent){
+    ans[node]=dp[node];
+    // cout<<node<<endl;
+    for(auto child: graph[node]){
+        if(child==parent) continue;
+        dp[node]-=max(dp[child],0);
+        dp[child]+=max(0,dp[node]);
+        dfs2(child,node);
+        dp[child]-=max(0,dp[node]);
+        dp[node]+=max(0,dp[child]);
+    }
 }
 
 void solution(){
 
     // This is the main code
-    cin>>n>>m;
-    memset(vis,0,sizeof(vis));
-    memset(happy_sum,0,sizeof(happy_sum));
-    memset(total_vis,0,sizeof(total_vis));
-    forn(i,1,n+1) graph[i].clear();
-    forn(i,1,n+1) cin>>p[i];
-    forn(i,1,n+1) cin>>h[i];
+    cin>>n;
+    forn(i,1,n+1){
+        cin>>a[i];
+        if(a[i]==0) a[i]=-1;
+    }
     forn(i,0,n-1){
         cin>>u>>v;
-        graph[v].pb(u);
         graph[u].pb(v);
+        graph[v].pb(u);
     }
-    flag=0;
-    dfs(1,0);
-    if(flag) cout<<"NO"<<endl;
-    else cout<<"YES"<<endl;
-
+    dfs1(1,0);
+    dfs2(1,0);
+    forn(i,1,n+1) cout<<ans[i]<<" ";
 }
 
 
@@ -80,7 +81,7 @@ int main(){
     FIO()   
     
     ll t=1;
-    cin>>t;
+    //cin>>t;
     while (t--)
     {
         solution();
