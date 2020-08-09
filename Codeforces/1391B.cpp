@@ -26,32 +26,25 @@
 
 
 using namespace std;
-int dp[maxn];
-
-int func(int n,int k){
-    if(n<0) return 0;
-    if(n==0) return 1;
-    if(dp[n]==0){
-        ll res=0;
-        forn(i,1,k+1){
-            if(n>=i) res+=func(n-i,k);
-        }
-        dp[n]=res%Mod;
-        return res%Mod;
-    }
-    return dp[n]%Mod;
-}
 
 
 void solution(){
 
     // This is the main code
-    int n,k,d;
-    cin>>n>>k>>d;
-    int ans1=func(n,k);
-    memset(dp,0,sizeof(dp));
-    int ans2=func(n,d-1);
-    cout<<((ans1-ans2)+Mod)%Mod;
+    int n,m;
+    cin>>n>>m;
+    char s[n+1][m+1];
+    int ans=0;
+    forn(i,1,n+1){
+        forn(j,1,m+1){
+            cin>>s[i][j];
+            if(s[i][j]=='C') continue;
+            if(j==m && s[i][j]=='R') ans+=1;
+            if(i==n && s[i][j]=='D') ans+=1;
+        }
+    }
+    
+    cout<<ans<<endl;
 }
 
 
@@ -65,7 +58,7 @@ int main(){
     FIO()   
     
     ll t=1;
-    //cin>>t;
+    cin>>t;
     while (t--)
     {
         solution();
