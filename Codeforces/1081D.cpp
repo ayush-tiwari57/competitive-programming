@@ -30,14 +30,13 @@ using namespace std;
 struct Edge{
     int u,v,w;
 };
-bool comp(Edge u, Edge v){
-    return u.w<v.w;
+bool comp(Edge x, Edge y){
+    return x.w<y.w;
 }
 
 vector<int> graph[maxn];
 vector<Edge> edge;
 int parent[maxn],special[maxn],vis[maxn];
-int n,m,k,u,v,w,flag=0,cnt=0,ans;
 
 int find(int u){
     if(u==parent[u]) return u;
@@ -52,9 +51,10 @@ void merge(int u,int v){
 void solution(){
 
     // This is the main code
+    int n,m,k,u,v,w;
     cin>>n>>m>>k;
     forn(i,1,n+1) parent[i]=i;
-    forn(i,0,n){
+    forn(i,0,k){
         cin>>u;
         special[u]=1;
     }
@@ -66,15 +66,16 @@ void solution(){
         t.w=w;
         edge.pb(t);
     }
-    sort(all(edge));
+    sort(all(edge),comp);
+    int cnt=0,ans=0;
     for(Edge e: edge){
         if(find(e.u)!=find(e.v)){
-            graph[u].pb(v);
-            graph[v].pb(u);
-            merge(e.u,e.v);
+            special[find(e.v)]+=special[find(e.u)];
+            if(special[find(e.v)]==k){ans=e.w; break;}
+            merge(e.v,e.u);
         }
     }
-
+    forn(i,0,k) cout<<ans<<" ";
 
 }
 
