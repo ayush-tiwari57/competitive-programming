@@ -15,25 +15,17 @@ def solution():
     l=[]
     for i in range(n):
         l.append(int(s[i]))
-    # for i in range(1,n):
-    #     l[i]+=l[i-1]
-    l=[0]+l
-    j=1
-    i=1
-    q=0
+    d={}
+    d[0]=1
+    pre=[0]*(n+2)
+    for i in range(1,n+1):
+        pre[i]+=pre[i-1]+l[i-1]
     ans=0
-    while i<n+1 and j<n+1:
-        q+=l[i]
-        p=i-j+1
-        if p==q:
-            ans+=1
-            i+=1
-        elif p>q:
-            i+=1
-        else:
-            while j<=i and p<q
-    print(ans+1)
-
+    for i in range(1,n+1):
+        x=pre[i]-i
+        ans+=(d.get(x,0))
+        d[x]=d.get(x,0)+1
+    print(ans)
 t=int(input())
 for _ in range(t):
     solution()

@@ -28,12 +28,13 @@
 using namespace std;
 
 
+int dp[201][201][201];
 void solution(){
 
     // This is the main code
     int r,g,b;
     cin>>r>>g>>b;
-    vector<int> ar(r+1),ag(g+1),ab(b+1);
+    vector<int> ar(r),ag(g),ab(b);
     forn(i,0,r) cin>>ar[i];
     forn(i,0,g) cin>>ag[i];
     forn(i,0,b) cin>>ab[i];
@@ -43,75 +44,19 @@ void solution(){
     reverse(all(ag));
     sort(all(ab));
     reverse(all(ab));
-    int ans1=0,ans2=0,ans3=0;
-    int i=0,j=0,k=0;
-    for(i=0;i<r;i++){
-        if(j<g && k<b){
-            if(ag[j]>ab[k]){
-                ans1+=ar[i]*ag[j];
-                j+=1;
-            }
-            else{
-                ans1+=ar[i]*ab[k];
-                k+=1;
+    int ans=0;
+    forn(i,0,r+1){
+        forn(j,0,g+1){
+            forn(k,0,b+1){
+                if(i<r && j<g) dp[i+1][j+1][k]=max(dp[i+1][j+1][k],dp[i][j][k]+ar[i]*ag[j]);
+                if(i<r && k<b) dp[i+1][j][k+1]=max(dp[i+1][j][k+1],dp[i][j][k]+ar[i]*ab[k]);
+                if(j<g && k<b) dp[i][j+1][k+1]=max(dp[i][j+1][k+1],dp[i][j][k]+ag[j]*ab[k]);
+                ans=max(ans,dp[i][j][k]);
             }
         }
-        else if(j<g){
-            ans1+=ar[i]*ag[j];
-            j+=1;
-        }
-        else if(k<b){
-            ans1+=ar[i]*ab[k];
-            k+=1;
-        }
+                // cout<<ans<<endl;
     }
-    // cout<<ans1<<endl;
-    i=0,j=0,k=0;
-    for(i=0;i<g;i++){
-        if(j<r && k<b){
-            if(ar[j]>ab[k]){
-                ans2+=ag[i]*ar[j];
-                j+=1;
-            }
-            else{
-                ans2+=ag[i]*ab[k];
-                k+=1;
-            }
-        }
-        else if(j<r){
-            ans2+=ag[i]*ar[j];
-            j+=1;
-        }
-        else if(k<b){
-            ans2+=ag[i]*ab[k];
-            k+=1;
-        }
-    }
-
-    // cout<<ans2<<endl;
-    i=0,j=0,k=0;
-    for(i=0;i<b;i++){
-        if(j<g && k<r){
-            if(ag[j]>ar[k]){
-                ans3+=ab[i]*ag[j];
-                j+=1;
-            }
-            else{
-                ans3+=ab[i]*ar[k];
-                k+=1;
-            }
-        }
-        else if(j<g){
-            ans3+=ab[i]*ag[j];
-            j+=1;
-        }
-        else if(k<r){
-            ans3+=ab[i]*ar[k];
-            k+=1;
-        }
-    }
-
-    // cout<<max(ans1,max(ans2,ans3));
+    cout<<ans;
 }
 
 
