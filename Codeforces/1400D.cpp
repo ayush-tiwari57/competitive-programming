@@ -27,42 +27,21 @@
 
 using namespace std;
 
-int fact(int n); 
-  
-int nCr(int n, int r) 
-{ 
-    return fact(n) / (fact(r) * fact(n - r)); 
-} 
-  
-// Returns factorial of n 
-int fact(int n) 
-{ 
-    int res = 1; 
-    for (int i = 2; i <= n; i++) 
-        res = res * i; 
-    return res; 
-} 
-
 void solution(){
 
     // This is the main code
     int n;
     cin>>n;
-    vector<int> v[n+1];
-    int x;
-    forn(i,0,n){
-        cin>>x;
-        v[x].pb(i+1);
-    }
-    int ans=0;
-    forn(i,1,n+1){
-        if(v[i].size()>=2){
-            forn(j,i+1,n+1){
-                if(v[j].size()>=2){
-                    ans+=nCr(v[i].size(),2)+nCr(v[j].size(),2);
-                }
-            }
+    vector<int> left(3001),arr(n);
+    forn(i,0,n) cin>>arr[i];
+    ll ans=0;
+    forn(j,0,n){
+        vector<int> right(3001);
+        rforn(k,n-1,j+1){
+            ans+=right[arr[j]]*left[arr[k]];
+            right[arr[k]]++;
         }
+        left[arr[j]]++;
     }
     cout<<ans<<endl;
 }
