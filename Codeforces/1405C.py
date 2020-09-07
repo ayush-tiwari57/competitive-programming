@@ -12,40 +12,25 @@ def solution():
     # This is the main code
     n,k=map(int,input().split())
     s=list(input())
-    z=0
-    o=0
-    q=0
-    for i in range(k):
-        if s[i]=='0':
-            z+=1
-        elif s[i]=='1':
-            o+=1
-        else:
-            q+=1
+    a=['?']*k
     flag=0
-    if abs(z-o)<=q:
-        zm=z%2
-        om=o%2
-        qm=q%2
-        if zm==om:
-            if qm==1:
-                flag=1
+    for i in range(n):
+        if s[i]=='1' and a[i%k]=='0':
+            flag=1
+            break
+        elif s[i]=='0' and a[i%k]=='1':
+            flag=1
+            break 
         else:
-            if qm==0:
-                flag=1
-    else:
-        flag=1        
+            if s[i]!='?':
+                a[i%k]=s[i]
     if flag:
         print('NO')
     else:
-        j=0
-        for i in range(1,n-k+1):
-            if s[j]=='0':
-                z-=1
-            elif s[j]=='1':
-                o-=1
-            j+=1
-            if l[i]=='?':
+        if a.count('1')>k//2 or a.count('0')>k//2:
+            print('NO')
+        else:
+            print('YES')
 
 t=int(input())
 for _ in range(t):
