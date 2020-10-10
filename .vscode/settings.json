@@ -4,5 +4,6 @@
         "ostream": "cpp",
         "cmath": "cpp"
     },
-    "code-runner.runInTerminal": true
+    "code-runner.runInTerminal": true,
+    "editor.smoothScrolling": true
 }
