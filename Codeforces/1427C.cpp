@@ -50,7 +50,7 @@ void solution(){
     cout<<suff[n];
 }
 
-
+ 
 int main(){
     
     #ifndef ONLINE_JUDGE
