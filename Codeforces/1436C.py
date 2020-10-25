@@ -24,14 +24,12 @@ def solution():
     ans=1
     big=n-x
     small=x-1
+    mid=(beg+end)//2
     while beg<end:
         mid=(beg+end)//2
         # print(mid,small,big)
         if mid==pos:
-            ans*=fact(small+big)
-            ans%=mod
-            print(ans)
-            break
+            beg=mid+1
         elif mid>pos:
             ans*=big
             ans=ans%mod
@@ -44,7 +42,12 @@ def solution():
             if small>0:
                 small-=1
             beg=mid+1
-
+    if beg<=0:
+        print(0)
+        return
+    ans*=fact(big+small)
+    ans%=mod
+    print(ans)  
 t=1
 for _ in range(t):
     solution()
