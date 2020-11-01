@@ -18,7 +18,7 @@
 #define rforn(i,a,b) for(int i=a; i>=b; i--)
 
 // defined values
-#define maxn 200004
+#define maxn 100004
 #define Mod 1000000007
 
 // fast io
@@ -27,25 +27,6 @@
 
 using namespace std;
 
-
-int parent[maxn];
-
-void make_set(int v) {
-    parent[v] = v;
-}
-
-int find_set(int v) {
-    if (v == parent[v])
-        return v;
-    return parent[v] = find_set(parent[v]);
-}
-
-void union_sets(int a, int b) {
-    a = find_set(a);
-    b = find_set(b);
-    if (a != b)
-        parent[b] = a;
-}
 
 int arr[maxn];
 
@@ -86,30 +67,29 @@ void solution(){
 
     int n,ans=1;
     cin>>n;
-    set<int> s,pre;
-    memset(parent,0,sizeof(parent));
+    set<int> s;
     vector<int> a(n);
+    forn(i,0,n) cin>>a[i];
+    vector<int> high(maxn,0),low(maxn,0),pre(maxn,0);
     forn(i,0,n){
-        cin>>a[i];
-        make_set(i+1);
-    }
-
-
-   s= primeFactors(a[0]);
-    for(auto x: s) pre.insert(x);
-    
-    forn(i,1,n){
-        
-       s= primeFactors(a[i]);
+        s=primeFactors(a[i]);
         for(auto x: s){
-            // cout<<x<<" ";
-            if(pre.find(x)!=pre.end()) ans=i+1;
-            pre.insert(x);
+            if(low[x]==0) low[x]=i+1;
+            high[x]=i+1;
         }
     }
-    cout<<ans;
 
-    
+    forn(i,2,maxn){
+        pre[low[i]]++;
+        pre[high[i]]--;
+    }
+    forn(i,1,maxn) pre[i]+=pre[i-1];
+    forn(i,1,maxn){
+        if(pre[i]==0){
+            cout<<i<<endl;
+            return;
+        }
+    } 
 }
 
 
