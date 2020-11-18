@@ -4,8 +4,8 @@ Codeforces: servermonk
 Codechef: ayush572000
 
 """
-import sys
-input = sys.stdin.buffer.readline
+# import sys
+# input = sys.stdin.buffer.readline
 
 def solution():
     
