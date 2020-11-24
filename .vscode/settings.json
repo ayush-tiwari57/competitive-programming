@@ -6,5 +6,5 @@
     },
     "code-runner.runInTerminal": true,
     "editor.smoothScrolling": true,
-    "python.pythonPath": "C:\\Users\\shri\\AppData\\Local\\Programs\\Python\\Python38-32\\python.exe"
+    "python.pythonPath": "/usr/bin/python3"
 }
