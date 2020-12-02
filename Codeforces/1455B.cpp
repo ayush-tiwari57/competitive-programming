@@ -33,7 +33,7 @@ void solution(){
     // This is the main code
     long x, sum = 0, turn = 1, sol = 0;
 		cin >> x;
-		while (true)
+		while(true)
 		{
 			sum = sum + turn;
 			if (sum == x)
