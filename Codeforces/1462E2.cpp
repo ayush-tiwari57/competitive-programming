@@ -27,80 +27,76 @@
 
 using namespace std;
 
-#include <bits/stdc++.h>
-using namespace std;
- 
-/* Iterative Function to calculate (x^y)%p
-in O(log y) */
-unsigned long long power(unsigned long long x, 
-                                  int y, int p)
+unsigned long long fac[200005];
+unsigned long long power(unsigned long long x, int y, int p)
 {
-    unsigned long long res = 1; // Initialize result
+    unsigned long long res = 1; 
  
-    x = x % p; // Update x if it is more than or
-    // equal to p
+    x = x % p; 
  
     while (y > 0) 
     {
      
-        // If y is odd, multiply x with result
         if (y & 1)
             res = (res * x) % p;
  
-        // y must be even now
-        y = y >> 1; // y = y/2
+        y = y >> 1; 
         x = (x * x) % p;
     }
     return res;
 }
  
 // Returns n^(-1) mod p
-unsigned long long modInverse(unsigned long long n,  
-                                            int p)
+unsigned long long modInverse(unsigned long long n,int p)
 {
     return power(n, p - 2, p);
 }
  
-// Returns nCr % p using Fermat's little
-// theorem.
+
 unsigned long long nCrModPFermat(unsigned long long n,int r, int p)
 {
-    // If n<r, then nCr should return 0
     if (n < r)
         return 0;
-    // Base case
     if (r == 0)
         return 1;
- 
-    // Fill factorial array so that we
-    // can find all factorial of r, n
-    // and n-r
-    unsigned long long fac[n + 1];
-    fac[0] = 1;
-    for (int i = 1; i <= n; i++)
-        fac[i] = (fac[i - 1] * i) % p;
- 
     return (fac[n] * modInverse(fac[r], p) % p
             * modInverse(fac[n - r], p) % p)
            % p;
 }
 
+void store() {
+	fac[0] = 1;
+	for (int i = 1 ; i <= 200004 ; i++) {
+		fac[i] = (fac[i - 1] * i) % 1000000007;
+	}
+}
+
 void solution(){
 
     // This is the main code
-    int n,m,k;
-    cin>>n>>m>>k;
+    int n,m=3,k=2;
+    cin>>n;
     vector<int> a(n);
     forn(i,0,n) cin>>a[i];
     sort(all(a));
     ll ans=0;
-    int j=m-1,i=0;
-    while(i<n-m && j<n){
-        while(j<n && a[j]-a[i]<=k){
-            j+=1;
+    int last=-1;
+    forn(i,0,n){
+        // cout<<a[i]<<" "<<a[i]+k<<endl;
+        int ind=upper_bound(all(a),a[i]+k)-a.begin();
+        if(ind-i>=m && last==-1){
+            ans+=nCrModPFermat(ind-i,m,Mod);
+            ans%=Mod;
+            // cout<<i<<" "<<ind<<endl;
         }
-        ans+=nCrModPFermat(j-i-1,)
+        else if(ind >last){
+            ans+=(nCrModPFermat(ind-i,m,Mod));
+            ans%=Mod;
+            if(last-i>=m) ans=(ans-nCrModPFermat(last-i,m,Mod)+Mod)%Mod;
+        }
+        last=ind;
     }
+    cout<<ans<<endl;
 }
 
 
@@ -112,7 +108,7 @@ int main(){
     #endif  
     
     FIO()   
-    
+    store();
     ll t=1;
     cin>>t;
     while (t--)
