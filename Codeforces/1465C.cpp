@@ -50,7 +50,7 @@ void solution(){
 	forn(i,0,n+1){
 		graph[i].clear();
 		vis[i]=0;
-	}
+	}	
 	forn(i,0,m){
 		cin>>u>>v;
 		if(u!=v){
