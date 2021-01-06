@@ -27,22 +27,40 @@
 
 using namespace std;
 
-bool comp(pair<ll,ll> p1,pair<ll,ll> p2){
-    if(p1.first>p2.first) return true;
-    return false;
-}
+// bool comp(vector<int> v1,vector<int> v2){
+//     if(v1[0]==v2[0]) return v1[1]>v2[1];
+//     return v1[0]<v2[0];
+// }
 
 void solution(){
 
     // This is the main code
     int n,u,v;
-    vector<pair<ll,ll>> h,w;
+    cin>>n;
+    vector<vector<int>> a;
     forn(i,0,n){
         cin>>u>>v;
-        h.pb({u,i});
-        w.pb({v,i});
+        a.pb({u,-v,i});
+        a.pb({v,-u,i});
     }  
-    
+    sort(all(a));
+    vector<int> ans(n,-1);
+    int minh=INT_MAX,ele=-1;
+    forn(i,0,2*n){
+        int w=a[i][0];
+        int h=-a[i][1];
+        int ind=a[i][2];
+        // cout<<w<<" "<<h<<" "<<ind<<endl;
+        if(minh>h){
+            minh=h;
+            ele=ind;
+        }
+        else if(minh<h){
+            ans[ind]=ele+1;
+        }
+    }
+    forn(i,0,n) cout<<ans[i]<<" ";
+    cout<<endl;
 }
 
 
