@@ -27,23 +27,24 @@
 
 using namespace std;
 
-int a[maxn],vis[maxn],cost[maxn];
+vector<int> a(maxn,0),vis(maxn,0),cost(maxn,INT_MAX);
 vector<int> graph[maxn];
 
-void dfs(int node,int parent,int mi,int ma){
+void dfs(int node,int parent,int mi){
     vis[node]=1;
-    cost[node]=max(a[node]-mi,ma);
-    // cout<<node<<" "<<cost[node]<<endl;
-    ma=max(ma,cost[node]);
+    // cout<<node<<" "<<parent<<" "<<cost[node]<<endl;
+    if(mi!=INT_MAX) cost[node]= max(cost[node],a[node]-mi);
     mi=min(mi,a[node]);
-    for(auto child:graph[node]){
-        if(vis[child]){
-            cost[node]=max(cost[node],cost[child]);
-            continue;
-        }
-        dfs(child,node,mi,ma);
+    for(auto child: graph[node]){
+        // if(vis[child]){
+        //     // cout<<"yo";
+        //     cost[node]=max(cost[node],cost[child]);
+        //     continue;
+        // }
+        dfs(child,node,mi);
     }
-    cost[node]=max(cost[node],ma);
+    // cout<<node<<" "<<parent<<" "<<cost[node]<<endl;
+    if(cost[node]!=INT_MAX) cost[parent]=max(cost[node],cost[parent]);
 }
 
 void solution(){
@@ -52,17 +53,23 @@ void solution(){
     int n,m;
     cin>>n>>m;
     forn(i,1,n+1) cin>>a[i];
+    int u,v;
     forn(i,0,m){
-        int u,v;
         cin>>u>>v;
         graph[u].pb(v);
     }
-    memset(cost,INT_MIN,sizeof(cost));
-    for(int i=1;i<n+1;i++){
-        if(!vis[i]) dfs(i,0,INT_MAX,INT_MIN);
-    }
+    // memset(cost,INT_MIN,sizeof(cost));
+    
     int ans=INT_MIN;
-    forn(i,1,n+1) ans=max(ans,cost[i]);
+    // forn(i,1,n+1) if(cost[i]<INT_MAX) ans=max(ans,cost[i]);
+    forn(i,1,n+1){
+        for(auto x: graph[i]){
+            u=i;
+            v=x;
+            cost[v]=min(cost[v],min(cost[u],a[u]));
+        }   
+        if(cost[i]!=INT_MAX) ans=max(ans,a[i]-cost[i]);
+    }
     cout<<ans;
 }
 
