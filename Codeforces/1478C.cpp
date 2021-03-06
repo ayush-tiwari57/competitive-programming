@@ -75,8 +75,8 @@ void solution(){
 signed main(){
     
     #ifndef ONLINE_JUDGE
-    freopen("E:/CP/input.txt","r",stdin);
-    freopen("E:/CP/output.txt","w",stdout);
+    freopen("D:/competitive-programming/input.txt","r",stdin);
+    freopen("D:/competitive-programming/output.txt","w",stdout);
     #endif  
     
     FIO()   
