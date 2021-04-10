@@ -31,6 +31,30 @@ using namespace std;
 void solution(){
 
     // This is the main code
+    string a,b;
+    cin>>a;
+    cin>>b;
+    int n=a.size();
+    int m=b.size();
+    int ans=n+m;
+    forn(i,0,n){
+        string a1="";
+        forn(j,i,n){
+            a1+=a[j];
+            int len=j-i+1;
+            forn(k,0,m-len+1){
+                string b1="";
+                forn(q,k,k+len) b1+=b[q];
+                if(a1==b1){
+                    // cout<<a1<<endl;
+                    // cout<<b1<<endl;
+                    // cout<<i<<" "<<j<<" "<<k<<" "<<len<<endl;
+                    ans=min(ans,i+n-j-1+k+m-(k+len));
+                }
+            }
+        }
+    }
+    cout<<ans<<endl;
     
 }
 

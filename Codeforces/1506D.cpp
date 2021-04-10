@@ -31,6 +31,31 @@ using namespace std;
 void solution(){
 
     // This is the main code
+    int n;
+    cin>>n;
+    int a[n];
+    map<int,int> m;
+    priority_queue<int> pq;
+    forn(i,0,n){
+        cin>>a[i];
+        m[a[i]]++;
+    }
+    int ans=n;
+    for(auto x: m){
+        pq.push(x.second);
+    }
+    while(pq.size()>=2){
+        int x=pq.top();
+        pq.pop();
+        int y=pq.top();
+        pq.pop();   
+        x--;
+        y--;
+        ans-=2;
+        if(x) pq.push(x);
+        if(y) pq.push(y);
+    }
+    cout<<ans<<endl;
     
 }
 
