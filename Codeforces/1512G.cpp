@@ -5,6 +5,8 @@
 
 #include <bits/stdc++.h>
 #define ll long long
+#define endl "\n"
+
 
 //STL
 #define pb push_back
@@ -26,47 +28,14 @@
 
 
 using namespace std;
-ll dp[10000002];
-ll sum(int x){
-    ll s=0;
-    for(int i=1;i<=sqrt(x);i++){
-        if(x%i==0){
-            if(dp[i] && dp[x/i]){
-
-                if(x/i!=i)
-                s=dp[i]+dp[x/i];
-                else s=dp[i]+dp[x/i];
-                return s;
-            }
-            else{
-                if(x/i==i) s+=i;
-                else{
-                    s+=i;
-                    s+=x/i;
-                }
-            }
-            // cout<<i<<" "<<s<<endl;
-        }
-    }
-    return s;
-}
-
+int dp[10000002],ans[10000002];
 void solution(){
 
     // This is the main code
-    ll n;
+    int n;
     cin>>n;
     // cout<<sum(2)<<endl;
-    int beg=1,end=n-1,last=-1;
-    forn(i,1,n+1){
-        // cout<<sum(i)<<endl;
-        if(dp[i]==n){
-            cout<<i<<endl;
-            return;
-
-        }
-    }
-    cout<<-1<<endl;
+    cout<<ans[n]<<endl;
 }
 
 
@@ -78,11 +47,17 @@ int main(){
     #endif  
     
     FIO()   
-    dp[0]=0;
-    dp[1]=1;
-    forn(i,2,10000001) dp[i]=sum(i)+i;
-    ll t=1;
+    forn(i,1,10000002){
+        ans[i]=-1;
+        for(int j=i;j<=10000001;j+=i) dp[j]+=i;
+    }
+    rforn(i,10000000,1){
+        if(dp[i]<=10000000) ans[dp[i]]=i;
+    }
+    int t=1;
     cin>>t;
+    
+    // cout<<dp[6]<<endl;
     while (t--)
     {
         solution();
