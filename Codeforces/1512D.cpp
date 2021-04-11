@@ -28,61 +28,42 @@
 using namespace std;
 
 
-void solution(){
-
-    // This is the main code
-    int n;
-    cin>>n;
-    vector<int> a(n+2);
-    forn(i,0,n+2) cin>>a[i];
-    sort(all(a));
-    int s=0;
-    forn(i,0,n) s+=a[i];
-
-    //largest
-    s+=a[n];
-    forn(i,0,n+1){
-        if(s-a[i]==a[n+1]){
-            forn(j,0,n+1){
-                if(j!=i) cout<<a[j]<<" ";
-            }
-            cout<<endl;
-            return;
-        }
-    }
-    s-=a[n];
-
-    //second largest
-    s+=a[n+1];
-    forn(i,0,n+2){
-        if(i==n) continue;
-        if(s-a[i]==a[n]){
-            forn(j,0,n+2){
-                if(j!=i && j!=n) cout<<a[j]<<" ";
-            }
-            cout<<endl;
-            return;
-        }
-    }
-    s-=a[n+1];
-    cout<<-1<<endl;
+void no() {
+  cout << "-1" << endl;
 }
 
+void solve() {
+  int n;
+  cin >> n;
+  vector<int> b(n + 2);
+  for (int &x : b) {
+    cin >> x;
+  }
 
-int main(){
-    
-    #ifndef ONLINE_JUDGE
-    freopen("D:/competitive-programming/input.txt","r",stdin);
-    freopen("D:/competitive-programming/output.txt","w",stdout);
-    #endif  
-    
-    FIO()   
-    
-    ll t=1;
-    cin>>t;
-    while (t--)
-    {
-        solution();
+  multiset<int> have(b.begin(), b.end());
+  long long sum = accumulate(b.begin(), b.end(), 0LL);
+  for (int x : b) {
+    have.erase(have.find(x));
+    sum -= x;
+    if (sum % 2 == 0 && sum <= 2'000'000'000 && have.find(sum / 2) != have.end()) {
+      have.erase(have.find(sum / 2));
+      for (int y : have) {
+        cout << y << " ";
+      }
+      cout << endl;
+      return;
     }
-    return 0;
+    sum += x;
+    have.insert(x);
+  }
+  no();
+}
+
+int main() {
+  int tests;
+  cin >> tests;
+  while (tests-- > 0) {
+    solve();
+  }
+  return 0;
 }
