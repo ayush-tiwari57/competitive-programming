@@ -28,7 +28,7 @@
 
 using namespace std;
 
-ll minarr[4*maxn],operation[4*maxn];
+ll segtree[4*maxn],lazytree[4*maxn];
 
 // void build(int ind,int ss,int se){
 //     if(ss==se) {
@@ -41,49 +41,49 @@ ll minarr[4*maxn],operation[4*maxn];
 //     segtree[ind]=segtree[2*ind+1]+segtree[2*ind];
 // }
 
-void update(int ind,int ss,int se,int qs,int qe,ll ele){
-    if(operation[ind]!=0){
-        ll dx=operation[ind];
+void add(int ind,int ss,int se,int qs,int qe,ll ele){
+    if(lazytree[ind]!=0){
+        ll dx=lazytree[ind];
         if(ss!=se){
-            operation[2*ind]+=dx;
-            operation[2*ind+1]+=dx;
+            lazytree[2*ind]+=dx;
+            lazytree[2*ind+1]+=dx;
         }
-        operation[ind]=0;
-        minarr[ind]+=dx;
+        lazytree[ind]=0;
+        segtree[ind]+=dx*(se-ss+1);
     }
     if(qs>se || qe<ss) return;
     if(qs<=ss && qe>=se) {
-        minarr[ind]+=ele;
+        segtree[ind]+=ele*(se-ss+1);
         if(ss!=se){
-            operation[2*ind]+=ele;
-            operation[2*ind+1]+=ele;
+            lazytree[2*ind]+=ele;
+            lazytree[2*ind+1]+=ele;
         } 
         return; 
     }
     int mid=(ss+se)/2;
-    update(2*ind,ss,mid,qs,qe,ele);
-    update(2*ind+1,mid+1,se,qs,qe,ele);
-    minarr[ind]=min(minarr[2*ind],minarr[2*ind+1]);
+    add(2*ind,ss,mid,qs,qe,ele);
+    add(2*ind+1,mid+1,se,qs,qe,ele);
+    segtree[ind]=segtree[2*ind]+segtree[2*ind+1];
 }
 
-ll findmin(int ind,int ss,int se,int qs,int qe){
-    if(operation[ind]!=0){
-        ll dx=operation[ind];
+ll findsum(int ind,int ss,int se,int qs,int qe){
+    if(lazytree[ind]!=0){
+        ll dx=lazytree[ind];
         if(ss!=se){
-            operation[2*ind]+=dx;
-            operation[2*ind+1]+=dx;
+            lazytree[2*ind]+=dx;
+            lazytree[2*ind+1]+=dx;
         }
-        operation[ind]=0;
-        minarr[ind]+=dx;
+        lazytree[ind]=0;
+        segtree[ind]+=dx*(se-ss+1);
     }
-    if(qs>se || qe<ss) return LLONG_MAX;
+    if(qs>se || qe<ss) return 0;
     if(qs<=ss && qe>=se) {
-        return minarr[ind];
+        return segtree[ind];
     }
     int mid=(ss+se)/2;
-    ll x=findmin(2*ind,ss,mid,qs,qe);
-    ll y=findmin(2*ind+1,mid+1,se,qs,qe);
-    return min(x,y);
+    ll x=findsum(2*ind,ss,mid,qs,qe);
+    ll y=findsum(2*ind+1,mid+1,se,qs,qe);
+    return x+y;
 }
 void solution(){
 
@@ -95,12 +95,12 @@ void solution(){
         if(t==1){
             cin>>l>>r>>ele;
             l++;
-            update(1,1,n,l,r,ele);
+            add(1,1,n,l,r,ele);
         }   
         else{
             cin>>l>>r;
             l++;
-            cout<<findmin(1,1,n,l,r)<<endl;
+            cout<<findsum(1,1,n,l,r)<<endl;
         }             
     }
 }
