@@ -42,7 +42,7 @@ void solution(){
 	cout << "? " << beg << " " << end << endl;
 	flu();
 	int sum, ans; cin >> sum;
-    
+
 	while (beg < end) {
 		int m = beg+(end-beg)/2;
 		cout << "? " << beg << " " << m << endl;
@@ -75,7 +75,7 @@ int main(){
     // cin>>t;
     while (t--)
     {
-        solution();
+        solution(); 
     }
     return 0;
 }
