@@ -13,7 +13,6 @@
 #define ub upper_bound
 #define mp make_pair 
 #define all(v) v.begin(), v.end()
-#define flu cout.flush
 
 //loops
 #define forn(i,a,b) for(int i=a;  i<b; i++)
@@ -34,31 +33,33 @@ void solution(){
 
     // This is the main code
     int t,n,k;
-    cin>>t>>n;
+    cin>>n>>t;
     cin>>k;
-    bool done = false;
+    // bool done = false;
 	int beg = 1, end = n;
 
 	cout << "? " << beg << " " << end << endl;
-	flu();
-	int sum, ans; cin >> sum;
+	cout.flush();
+	int sum, ans=0; cin >> sum;
 
-	while (beg < end) {
+	while (beg <=end) {
 		int m = beg+(end-beg)/2;
 		cout << "? " << beg << " " << m << endl;
-        flu();
+        cout.flush();
 		int x; cin >> x;
 
 		int diff = (m - beg + 1) - x;
 		if (diff < k) {
+            // ans=m;
             beg = m + 1;
 			k -= diff;
         }
 		else {
-			end = m;
+            ans=m;
+			end = m-1;
 		}
 	}
-    cout << "! " << beg << endl;
+    cout << "! "<< ans << endl;
 }
 
 
