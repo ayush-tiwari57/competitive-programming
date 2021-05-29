@@ -29,33 +29,19 @@
 using namespace std;
 
 
+
 void solution(){
 
     // This is the main code
     int n;
     cin>>n;
-    set<int> s;
-    vector<int> v;
-    v.pb(11);
-    v.pb(111);
-    v.pb(11111);
-    v.pb(1111111);
-    int x=n/11,y=n/111,a=n/11111,b=n/1111111;
-    forn(i,0,x+1){
-        forn(j,0,y+1){
-            forn(k,0,a+1){
-                forn(l,0,b+1){
-                    int su=11*i+111*j+11111*k+1111111*l;
-                    if(n%su==0){
-                        cout<<"YES"<<endl;
-                        return;
-                    }
-                }
-            }
-        }
-    }
-   
-    cout<<"NO"<<endl;
+    int times = n/111;
+    	if(((n%111)%11) == 0 || ((n%111)%11) >= (11-times) || (n%11) == 0)	{
+    		cout << "YES\n";
+	} else	{
+		cout << "NO\n";
+	}
+
 }
 
 
